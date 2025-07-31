@@ -298,23 +298,8 @@ export default function EnhancedVehicleTradeInForm() {
                         </div>
                       )}
                     </>
-                  ) : shouldShowGuidance ? (
-                    // Show guidance preview for VIN/license/odometer
-                    <div 
-                      className="cursor-pointer"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setCurrentPhotoType(photoType.guidance)
-                        setShowGuidance(!showGuidance)
-                      }}
-                    >
-                      <div className="w-20 h-12 bg-blue-100 rounded mb-2 mx-auto flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-blue-600" />
-                      </div>
-                      <span className="text-sm text-blue-600 font-medium">Tap for Guide</span>
-                    </div>
                   ) : (
-                    // Simple capture for vehicle photos
+                    // Simple capture for all photos (no more double-click guidance)
                     <>
                       <Camera className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
                       <span className="text-sm">Tap to Capture</span>
