@@ -80,6 +80,10 @@ export default function EnhancedVehicleTradeInForm() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
+      // FIX: Set userEmail from authenticated user
+      if (currentUser && currentUser.email) {
+        setUserEmail(currentUser.email)
+      }
     })
     return () => unsubscribe()
   }, [])
