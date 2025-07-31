@@ -106,8 +106,8 @@ function extractMileageFromText(text: string): string {
     }
   }
   
-  // Step 4: Look for clustered digits (common in digital odometers)
-  const digitClusters = text.match(/\d{4,7}/g) || [];
+  // Step 4: Look for clustered digits (including very short ones for low mileage)
+  const digitClusters = text.match(/\d{1,7}/g) || [];  // CHANGED: was \d{4,7}, now \d{1,7}
   allCandidates.push(...digitClusters);
   
   // Remove duplicates
