@@ -840,7 +840,7 @@ export default function EnhancedVehicleTradeInForm() {
           <CardTitle className="text-3xl font-bold">
             🚀 Enhanced Trade-In System v6.0
           </CardTitle>
-          <p className="text-blue-100">Smart OCR • VIN Scanner • License Plate Reader</p>
+          <p className="text-blue-100">Smart OCR • VIN Scanner • Enhanced Photo Capture</p>
         </CardHeader>
         <CardContent className="p-8">
           <form onSubmit={handleSubmit} className="space-y-8">
