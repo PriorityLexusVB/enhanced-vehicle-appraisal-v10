@@ -99,7 +99,7 @@ function extractMileageFromText(text: string): string {
       matches.forEach(match => {
         // Extract just the numbers from the match
         const numbers = match.replace(/[^\d]/g, '');
-        if (numbers.length >= 4 && numbers.length <= 7) {
+        if (numbers.length >= 1 && numbers.length <= 7) {  // CHANGED: was >= 4, now >= 1
           allCandidates.push(numbers);
         }
       });
