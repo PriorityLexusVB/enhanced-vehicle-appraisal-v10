@@ -67,8 +67,13 @@ export default function HomePage() {
 
   // Determine what options to show based on role
   const isAdmin = userRole?.role === 'admin'
-  const isManager = userRole?.role === 'manager' || isAdmin
-  const canSubmit = userRole?.role === 'sales' || isAdmin  // CHANGED: Only sales and admin can submit, not managers
+  const isManager = userRole?.role === 'manager'
+  const isSales = userRole?.role === 'sales'
+  
+  // Role-specific permissions
+  const canSubmit = isSales || isAdmin  // Only sales staff and admins submit vehicles
+  const canViewDashboard = isManager || isAdmin  // Managers and admins view submissions
+  const canAccessAdmin = isAdmin  // Only admins access admin panel
 
   return (
     <div className="min-h-screen bg-gray-50">
