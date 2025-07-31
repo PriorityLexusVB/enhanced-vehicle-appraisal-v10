@@ -84,12 +84,11 @@ export default function EnhancedVehicleTradeInForm() {
     return () => unsubscribe()
   }, [])
 
-  // Calculate completion percentage
+  // Calculate completion percentage - REMOVED LICENSE PLATE
   const getCompletionPercentage = () => {
-    const totalFields = 7 // vinPhoto, licensePlate, odometer, exterior1, exterior2, interior1, interior2
+    const totalFields = 6 // vinPhoto, odometer, exterior1, exterior2, interior1, interior2
     const completedFields = [
       formData.vinPhoto,
-      formData.licensePlate, 
       formData.odometer,
       formData.exterior1,
       formData.exterior2,
