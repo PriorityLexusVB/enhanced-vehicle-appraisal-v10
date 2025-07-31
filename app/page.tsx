@@ -68,7 +68,7 @@ export default function HomePage() {
   // Determine what options to show based on role
   const isAdmin = userRole?.role === 'admin'
   const isManager = userRole?.role === 'manager' || isAdmin
-  const canSubmit = ['sales', 'manager', 'admin'].includes(userRole?.role || '')
+  const canSubmit = userRole?.role === 'sales' || isAdmin  // CHANGED: Only sales and admin can submit, not managers
 
   return (
     <div className="min-h-screen bg-gray-50">
