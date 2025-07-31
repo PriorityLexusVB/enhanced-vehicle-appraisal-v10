@@ -123,10 +123,13 @@ function extractMileageFromText(text: string): string {
     const value = parseInt(candidate);
     let score = 0;
     
-    // Length scoring (5-6 digits most common)
+    // Length scoring - UPDATED to allow 1-3 digit readings for very low mileage
     if (candidate.length === 5) score += 30;
     else if (candidate.length === 6) score += 25;
     else if (candidate.length === 4) score += 15;
+    else if (candidate.length === 3) score += 20;            // NEW: 3 digits (e.g., 123 miles)
+    else if (candidate.length === 2) score += 25;            // NEW: 2 digits (e.g., 23 miles)
+    else if (candidate.length === 1) score += 20;            // NEW: 1 digit (e.g., 3 miles)
     else if (candidate.length === 7) score += 10;
     
     // Realistic mileage range scoring - FIXED to allow very low mileage
