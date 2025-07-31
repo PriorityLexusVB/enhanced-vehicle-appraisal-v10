@@ -568,13 +568,6 @@ export default function EnhancedVehicleTradeInForm() {
                     </div>
                   )}
 
-                  {plateOcrResult && !formData.vin && (
-                    <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                      <h3 className="font-semibold text-purple-800 text-center mb-2">🚗 License Plate Scanned</h3>
-                      <p className="text-center font-mono text-sm">{plateOcrResult}</p>
-                      <p className="text-center text-xs text-purple-600 mt-2">Please enter VIN manually or scan odometer to continue</p>
-                    </div>
-                  )}
 
                   {/* Odometer Section */}
                   <div className="space-y-4">
