@@ -386,6 +386,7 @@ export default function EnhancedVehicleTradeInForm() {
       setSubmitSuccess(true)
       
     } catch (error) {
+      console.error("Submission error:", error)
       setSubmitError("Submission failed")
     } finally {
       setIsSubmitting(false)
