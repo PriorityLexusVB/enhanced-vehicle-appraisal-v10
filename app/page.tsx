@@ -4,10 +4,12 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "@/lib/firebaseconfig"
+import { getUserRole, UserRole } from "@/lib/auth-utils"
 import SimpleLoginForm from "@/components/SimpleLoginForm"
 
 export default function HomePage() {
   const [user, setUser] = useState<any>(null)
+  const [userRole, setUserRole] = useState<UserRole | null>(null)
   const [loading, setLoading] = useState(true)
   const [mounted, setMounted] = useState(false)
   const router = useRouter()
@@ -17,8 +19,15 @@ export default function HomePage() {
   }, [])
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser)
+        const role = await getUserRole(currentUser)
+        setUserRole(role)
+      } else {
+        setUser(null)
+        setUserRole(null)
+      }
       setLoading(false)
     })
 
@@ -56,6 +65,11 @@ export default function HomePage() {
     return <SimpleLoginForm onLoginSuccess={handleLoginSuccess} />
   }
 
+  // Determine what options to show based on role
+  const isAdmin = userRole?.role === 'admin'
+  const isManager = userRole?.role === 'manager' || isAdmin
+  const canSubmit = ['sales', 'manager', 'admin'].includes(userRole?.role || '')
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,41 +77,51 @@ export default function HomePage() {
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900">Enhanced Vehicle Appraisal System</h1>
             <p className="mt-2 text-gray-600">Welcome, {user.email}</p>
+            <p className="text-sm text-gray-500">Role: {userRole?.role || 'Loading...'}</p>
           </div>
           
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">Trade-In Form</h2>
-              <p className="text-gray-600 mb-4">Submit vehicle information for appraisal</p>
-              <button 
-                onClick={() => router.push('/submit')}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-              >
-                Start Submission
-              </button>
-            </div>
+            {/* Trade-In Form - Only for sales/manager/admin who need to submit */}
+            {canSubmit && (
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Trade-In Form</h2>
+                <p className="text-gray-600 mb-4">Submit vehicle information for appraisal</p>
+                <button 
+                  onClick={() => router.push('/submit')}
+                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+                >
+                  Start Submission
+                </button>
+              </div>
+            )}
             
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">Manager Dashboard</h2>
-              <p className="text-gray-600 mb-4">View and manage submissions</p>
-              <button 
-                onClick={() => router.push('/manager-dashboard')}
-                className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
-              >
-                View Dashboard
-              </button>
-            </div>
+            {/* Manager Dashboard - Only for managers and admins */}
+            {isManager && (
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Manager Dashboard</h2>
+                <p className="text-gray-600 mb-4">View and manage submissions</p>
+                <button 
+                  onClick={() => router.push('/manager-dashboard')}
+                  className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+                >
+                  View Dashboard
+                </button>
+              </div>
+            )}
             
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">Admin Panel</h2>
-              <p className="text-gray-600 mb-4">System administration</p>
-              <button 
-                onClick={() => router.push('/admin')}
-                className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700"
-              >
-                Admin Access
-              </button>
-            </div>
+            {/* Admin Panel - Only for admins */}
+            {isAdmin && (
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Admin Panel</h2>
+                <p className="text-gray-600 mb-4">System administration</p>
+                <button 
+                  onClick={() => router.push('/admin')}
+                  className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700"
+                >
+                  Admin Access
+                </button>
+              </div>
+            )}
           </div>
           
           <div className="mt-8 text-center">
