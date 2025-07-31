@@ -373,8 +373,7 @@ export default function EnhancedVehicleTradeInForm() {
         vehicleInfo,
         ocrResults: {
           mileage: ocrResult,
-          vin: vinOcrResult,
-          licensePlate: plateOcrResult
+          vin: vinOcrResult
         }
       }
 
