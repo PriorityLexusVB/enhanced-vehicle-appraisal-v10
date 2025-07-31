@@ -744,7 +744,6 @@ export default function EnhancedVehicleTradeInForm() {
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       {[
                         { key: 'vinPhoto', label: 'VIN Plate' },
-                        { key: 'licensePlate', label: 'License Plate' },
                         { key: 'odometer', label: 'Odometer' },
                         { key: 'exterior1', label: 'Front/Side' },
                         { key: 'exterior2', label: 'Rear' },
