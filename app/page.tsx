@@ -86,7 +86,7 @@ export default function HomePage() {
           </div>
           
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Trade-In Form - Only for sales/manager/admin who need to submit */}
+            {/* Trade-In Form - Only for sales staff and admins */}
             {canSubmit && (
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">Trade-In Form</h2>
@@ -101,7 +101,7 @@ export default function HomePage() {
             )}
             
             {/* Manager Dashboard - Only for managers and admins */}
-            {isManager && (
+            {canViewDashboard && (
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">Manager Dashboard</h2>
                 <p className="text-gray-600 mb-4">View and manage submissions</p>
@@ -115,7 +115,7 @@ export default function HomePage() {
             )}
             
             {/* Admin Panel - Only for admins */}
-            {isAdmin && (
+            {canAccessAdmin && (
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">Admin Panel</h2>
                 <p className="text-gray-600 mb-4">System administration</p>
