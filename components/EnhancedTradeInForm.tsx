@@ -53,15 +53,14 @@ export default function EnhancedVehicleTradeInForm() {
   const [currentPhotoType, setCurrentPhotoType] = useState<string>('')
   const [showGuidance, setShowGuidance] = useState(false)
 
-  // Professional photo requirements mapping
+  // Professional photo requirements mapping - REMOVED LICENSE PLATE
   const photoTypeMapping = {
     'exterior1': { guidance: 'front', label: 'Front View', required: true },
     'exterior2': { guidance: 'rear', label: 'Rear View', required: true },
     'interior1': { guidance: 'interior-front', label: 'Interior Front', required: true },
     'interior2': { guidance: 'dashboard', label: 'Dashboard', required: true },
     'odometer': { guidance: 'odometer', label: 'Odometer Reading', required: true },
-    'vinPhoto': { guidance: 'vin', label: 'VIN Plate', required: true },
-    'licensePlate': { guidance: 'license-plate', label: 'License Plate', required: true }
+    'vinPhoto': { guidance: 'vin', label: 'VIN Plate', required: true }
   }
 
   useEffect(() => {
