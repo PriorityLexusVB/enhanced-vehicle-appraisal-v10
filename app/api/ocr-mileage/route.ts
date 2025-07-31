@@ -129,14 +129,15 @@ function extractMileageFromText(text: string): string {
     else if (candidate.length === 4) score += 15;
     else if (candidate.length === 7) score += 10;
     
-    // Realistic mileage range scoring
+    // Realistic mileage range scoring - FIXED to allow very low mileage
     if (value >= 10000 && value <= 300000) score += 40;      // Very realistic
     else if (value >= 5000 && value <= 500000) score += 25;  // Realistic
     else if (value >= 1000 && value <= 999999) score += 10;  // Possible
+    else if (value >= 1 && value <= 999) score += 35;        // NEW: Very low mileage (new cars, demos)
     
     // Avoid obvious non-mileage numbers
     if (value >= 1900 && value <= 2030) score -= 50;         // Years
-    if (value < 1000) score -= 30;                           // Too low
+    // REMOVED: if (value < 1000) score -= 30; // This was rejecting valid low mileage!
     if (value > 999999) score -= 30;                         // Too high
     
     // Common mileage patterns bonus
