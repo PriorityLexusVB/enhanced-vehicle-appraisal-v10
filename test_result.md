@@ -491,10 +491,10 @@ backend:
 
   - task: "OCR Mileage Endpoint"
     implemented: true
-    working: true
+    working: false
     file: "app/api/ocr-mileage/route.ts"
-    stuck_count: 0
-    priority: "medium"
+    stuck_count: 1
+    priority: "high"
     needs_retesting: false
     status_history:
       - working: true
@@ -503,6 +503,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "🎉 ENHANCED OCR ERROR HANDLING CONFIRMED WORKING PERFECTLY! Mileage OCR endpoint demonstrates the BEST implementation of enhanced error handling. ✅ Missing Image: Returns comprehensive error 'Failed to process the image. Please try again with a different photo.' with specific suggestion 'Ensure the image is clear, well-lit, and shows the odometer display'. ✅ Empty Images: Returns detailed guidance 'Could not detect any text in the image. Please try a clearer photo of the odometer display.' ✅ Poor Quality Images: Returns specific error 'Could not find valid mileage numbers in the image. Please take a clearer photo of the odometer.' ✅ All responses include success flags and structured error handling. Enhancement rate: 100% - EXEMPLARY implementation of user-friendly error messages."
+      - working: false
+        agent: "testing"
+        comment: "🚨 CRITICAL ISSUE: Low Mileage OCR Functionality NOT WORKING - Updated mileage OCR functionality for very low mileage readings (2-3 miles for new cars) is failing. Comprehensive testing reveals: ❌ Single digit mileage (2, 3, 5) returns 'UNREADABLE' instead of extracting the value. ❌ Two digit mileage (23, 45) returns 'UNREADABLE' instead of extracting the value. ❌ Three digit mileage (123, 456) returns 'UNREADABLE' instead of extracting the value. ❌ Pattern recognition ('2 MI', 'ODO: 3', 'MILES: 23') all return 'UNREADABLE'. ✅ Normal mileage (87325) and high mileage (234567) still work correctly. ✅ Invalid patterns (2023) are correctly rejected. ROOT CAUSE ANALYSIS: Local testing of the scoring algorithm shows it should work correctly (scores 55-60 for low mileage), but deployed version returns 'UNREADABLE'. This indicates a DEPLOYMENT ISSUE - the updated low mileage scoring changes are not deployed to production. SUCCESS RATE: 15.4% (2/13 tests passed). URGENT: Deploy updated mileage OCR code to fix low mileage extraction."
 
   - task: "Admin Users Management API"
     implemented: true
