@@ -796,7 +796,7 @@ export default function EnhancedVehicleTradeInForm() {
                 className="flex-1 disabled:opacity-50"
               >
                 {!canProceedToNextStep() ? (
-                  currentStep === 0 ? "Scan VIN or License First" :
+                  currentStep === 0 ? "Scan VIN First" :
                   currentStep === 1 ? "Complete Vehicle Info" :
                   "Take Required Photos"
                 ) : "Next →"}
