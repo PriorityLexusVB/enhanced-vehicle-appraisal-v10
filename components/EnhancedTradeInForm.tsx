@@ -237,8 +237,6 @@ export default function EnhancedVehicleTradeInForm() {
       await processOdometorOCR(file)
     } else if (field === "vinPhoto" && file) {
       await processVinOCR(file)
-    } else if (field === "licensePlate" && file) {
-      await processLicensePlateOCR(file)
     }
   }
 
