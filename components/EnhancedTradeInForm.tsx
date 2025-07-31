@@ -945,15 +945,6 @@ export default function EnhancedVehicleTradeInForm() {
                   />
                   
                   <PhotoUploadField
-                    field="licensePlate"
-                    label="License Plate Scanner"
-                    description="Alternative vehicle identification"
-                    processing={plateOcrProcessing}
-                    result={plateOcrResult}
-                    icon={FileText}
-                  />
-                  
-                  <PhotoUploadField
                     field="odometer"
                     label="Odometer Scanner"
                     description="Auto-read mileage display"
