@@ -243,8 +243,8 @@ export default function EnhancedVehicleTradeInForm() {
   const PhotoUploadField = ({ field, label, description, processing, result, icon: Icon, useGuidance = true }: any) => {
     const photoType = photoTypeMapping[field as keyof typeof photoTypeMapping]
     
-    // Only show guidance for VIN, license plate, and odometer
-    const shouldShowGuidance = useGuidance && photoType && ['vin', 'license-plate', 'odometer'].includes(photoType.guidance)
+    // Only show guidance for VIN and odometer (removed license plate)
+    const shouldShowGuidance = useGuidance && photoType && ['vin', 'odometer'].includes(photoType.guidance)
     
     return (
       <div className="space-y-2">
@@ -264,19 +264,19 @@ export default function EnhancedVehicleTradeInForm() {
             htmlFor={field}
             className="block cursor-pointer"
           >
-            {shouldShowGuidance && showGuidance && currentPhotoType === photoType?.guidance ? (
-              // Show photo guidance as clickable area
+            {shouldShowGuidance && !formData[field] ? (
+              // Show photo guidance as DIRECTLY CLICKABLE area (single click!)
               <div className="relative">
                 <PhotoGuidance photoType={photoType.guidance as any} isActive={true} />
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-lg">
                   <div className="text-center text-white">
                     <Camera className="w-8 h-8 mx-auto mb-2" />
-                    <span className="text-sm font-medium">Tap to Capture</span>
+                    <span className="text-sm font-medium">Tap Photo Guide to Capture</span>
                   </div>
                 </div>
               </div>
             ) : (
-              // Regular photo capture area
+              // Regular photo capture area or success state
               <div className={`flex items-center justify-center w-full h-40 border-2 rounded-xl transition-all hover:border-primary/50 hover:bg-accent/50 ${
                 processing ? "opacity-50 border-dashed" : ""
               } ${formData[field] ? "border-primary bg-primary/10" : "border-border border-dashed"}`}>
