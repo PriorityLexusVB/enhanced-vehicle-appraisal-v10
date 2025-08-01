@@ -221,7 +221,7 @@ export default function EnhancedVehicleTradeInForm() {
     { title: "Photos", icon: Camera, description: "Vehicle Photos" }
   ]
 
-  // Get authenticated user on mount
+  // Get authenticated user on mount and restore form data
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
@@ -230,6 +230,19 @@ export default function EnhancedVehicleTradeInForm() {
         setUserEmail(currentUser.email)
       }
     })
+    
+    // Try to restore form data from localStorage (prevent data loss)
+    try {
+      const savedData = localStorage.getItem('tradeInFormData')
+      if (savedData) {
+        const parsedData = JSON.parse(savedData)
+        console.log("🔄 Restoring form data from localStorage:", parsedData)
+        setFormData(prev => ({ ...prev, ...parsedData }))
+      }
+    } catch (error) {
+      console.log("No saved form data found")
+    }
+    
     return () => unsubscribe()
   }, [])
 
