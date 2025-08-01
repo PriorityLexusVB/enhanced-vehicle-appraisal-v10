@@ -324,19 +324,32 @@ export default function EnhancedVehicleTradeInForm() {
     const files = Object.values(formData).filter(f => f instanceof File) as File[]
     const totalFiles = files.length
     
+    // If no files to upload, return empty array immediately
+    if (totalFiles === 0) {
+      console.log("No photos to upload, proceeding with submission")
+      setUploadProgress(100)
+      return photoUrls
+    }
+    
+    console.log(`Uploading ${totalFiles} files...`)
+    
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
       const fieldName = Object.keys(formData)[Object.values(formData).indexOf(file)]
       try {
         const storageRef = ref(storage, `tradeins/${submissionId}/${fieldName}.jpg`)
+        console.log(`Uploading ${fieldName}...`)
         await uploadBytes(storageRef, file)
         const url = await getDownloadURL(storageRef)
         photoUrls.push(url)
         setUploadProgress(((i + 1) / totalFiles) * 100)
+        console.log(`✅ ${fieldName} uploaded successfully`)
       } catch (error) {
-        console.error(`Upload error for ${fieldName}:`, error)
+        console.error(`❌ Upload error for ${fieldName}:`, error)
+        // Continue with other uploads even if one fails
       }
     }
+    console.log(`Upload complete: ${photoUrls.length}/${totalFiles} files uploaded`)
     return photoUrls
   }
 
