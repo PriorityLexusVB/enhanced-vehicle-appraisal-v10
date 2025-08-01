@@ -110,8 +110,9 @@ export default function EnhancedVehicleTradeInForm() {
         return formData.vin || vinOcrResult
       case 1: // Vehicle info & odometer
         return formData.vin && (formData.mileage || ocrResult)
-      case 2: // Photos
-        return formData.exterior1 && formData.exterior2 && formData.interior1 && formData.interior2
+      case 2: // Photos - At least 2 photos required (more flexible)
+        const photoCount = [formData.exterior1, formData.exterior2, formData.interior1, formData.interior2, formData.vinPhoto, formData.odometer].filter(Boolean).length
+        return photoCount >= 2 // Allow submission with at least 2 photos
       default:
         return true
     }
