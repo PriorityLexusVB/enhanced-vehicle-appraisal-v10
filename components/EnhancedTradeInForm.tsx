@@ -563,6 +563,10 @@ export default function EnhancedVehicleTradeInForm() {
 
       await addDoc(collection(db, "appraisals"), submission)
       console.log("✅ Submission successful!")
+      
+      // Clear localStorage backup after successful submission
+      localStorage.removeItem('tradeInFormData')
+      
       setSubmitSuccess(true)
       
     } catch (error) {
