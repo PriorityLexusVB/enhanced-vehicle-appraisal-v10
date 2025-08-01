@@ -676,9 +676,9 @@ export default function EnhancedVehicleTradeInForm() {
                   </div>
 
                   {/* Manual Entry Option */}
-                  <div className="space-y-3 pt-4 border-t">
-                    <h3 className="font-medium text-center text-gray-600">Manual Entry</h3>
-                    <div>
+                  <div className="text-center space-y-3">
+                    <h3 className="font-medium text-center text-gray-600">Manual Entry or Barcode Scan</h3>
+                    <div className="space-y-3">
                       <Input
                         placeholder="Enter 17-digit VIN manually"
                         value={formData.vin}
@@ -686,6 +686,17 @@ export default function EnhancedVehicleTradeInForm() {
                         maxLength={17}
                         className="text-center font-mono"
                       />
+                      <div className="flex gap-2">
+                        <Button
+                          type="button"
+                          onClick={() => setShowBarcodeScanner(true)}
+                          variant="outline"
+                          className="flex-1 flex items-center justify-center gap-2"
+                        >
+                          <QrCode className="w-4 h-4" />
+                          Scan VIN Barcode
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
