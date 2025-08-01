@@ -678,7 +678,10 @@ export default function EnhancedVehicleTradeInForm() {
                       <div className="flex gap-2">
                         <Button
                           type="button"
-                          onClick={() => setShowBarcodeScanner(true)}
+                          onClick={() => {
+                            console.log("🔘 Barcode scanner button clicked!")
+                            setShowBarcodeScanner(true)
+                          }}
                           variant="outline"
                           className="flex-1 flex items-center justify-center gap-2"
                         >
