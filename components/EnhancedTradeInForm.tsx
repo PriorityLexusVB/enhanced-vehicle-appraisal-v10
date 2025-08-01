@@ -1156,6 +1156,9 @@ export default function EnhancedVehicleTradeInForm() {
           </form>
         </CardContent>
       </Card>
+      
+      {/* Barcode Scanner Modal */}
+      <BarcodeScanner />
     </div>
   )
 }
