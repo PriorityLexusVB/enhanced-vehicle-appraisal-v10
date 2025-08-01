@@ -552,7 +552,7 @@ export default function EnhancedVehicleTradeInForm() {
         mileage: parseInt(formData.mileage) || 0,
         notes: formData.notes,
         photoUrls,
-        createdAt: serverTimestamp(),
+        createdAt: new Date(), // Use regular Date instead of serverTimestamp() for mobile compatibility
         submissionId,
         vehicleInfo,
         ocrResults: {
