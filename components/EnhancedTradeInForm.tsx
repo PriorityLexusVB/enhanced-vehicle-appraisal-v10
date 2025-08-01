@@ -1056,29 +1056,41 @@ export default function EnhancedVehicleTradeInForm() {
                 )}
               </div>
             ) : (
-              <Button
-                type="submit"
-                onClick={handleSubmit}
-                disabled={isSubmitting || !userEmail.trim()}
-                className="flex-1 bg-green-600 hover:bg-green-700 disabled:opacity-50"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Submitting...
-                  </>
-                ) : !userEmail.trim() ? (
-                  <>
-                    <Upload className="w-4 h-4 mr-2" />
-                    Enter Email to Submit
-                  </>
-                ) : (
-                  <>
-                    <Upload className="w-4 h-4 mr-2" />
-                    Submit Vehicle
-                  </>
+              <div className="space-y-2">
+                {submitError && (
+                  <div className="text-sm text-red-600 text-center bg-red-50 p-2 rounded">
+                    {submitError}
+                  </div>
                 )}
-              </Button>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting || !userEmail.trim()}
+                  className="flex-1 bg-green-600 hover:bg-green-700 disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Submitting... ({Math.round(uploadProgress)}%)
+                    </>
+                  ) : !userEmail.trim() ? (
+                    <>
+                      <Upload className="w-4 h-4 mr-2" />
+                      Enter Email to Submit
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-4 h-4 mr-2" />
+                      Submit Vehicle
+                    </>
+                  )}
+                </Button>
+                {isSubmitting && (
+                  <div className="text-xs text-gray-500 text-center">
+                    📱 Mobile submission in progress... (max 15 sec)
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
