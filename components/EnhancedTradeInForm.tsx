@@ -803,7 +803,7 @@ export default function EnhancedVehicleTradeInForm() {
                 {!canProceedToNextStep() ? (
                   currentStep === 0 ? "Scan VIN First" :
                   currentStep === 1 ? "Complete Vehicle Info" :
-                  "Take Required Photos"
+                  "Take At Least 2 Photos"
                 ) : "Next →"}
               </Button>
             ) : (
