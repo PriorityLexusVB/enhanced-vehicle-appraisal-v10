@@ -54,8 +54,9 @@ export default function EnhancedVehicleTradeInForm() {
   const [showGuidance, setShowGuidance] = useState(false)
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false)
 
-  // Barcode scanning for VIN
+  // Barcode scanning for VIN - SIMPLIFIED VERSION
   const handleBarcodeResult = (result: string) => {
+    console.log("📱 Barcode scanned:", result)
     // Clean and validate VIN
     const cleanVIN = result.replace(/[^A-Z0-9]/g, '').toUpperCase()
     if (cleanVIN.length === 17) {
@@ -78,111 +79,24 @@ export default function EnhancedVehicleTradeInForm() {
     }
   }
 
-  // Barcode Scanner Component
+  // Simple Barcode Scanner Component - Mobile Optimized
   const BarcodeScanner = () => {
-    const videoRef = useRef<HTMLVideoElement>(null)
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-    
-    useEffect(() => {
-      if (!showBarcodeScanner) return
-      
-      let scanning = true
-      
-      const startScanning = async () => {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ 
-            video: { facingMode: 'environment' } // Use back camera
-          })
-          
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream
-            videoRef.current.play()
-          }
-          
-          // Import ZXing library dynamically
-          const { BrowserMultiFormatReader } = await import('@zxing/library')
-          const codeReader = new BrowserMultiFormatReader()
-          
-          const scan = () => {
-            if (!scanning || !videoRef.current || !canvasRef.current) return
-            
-            const canvas = canvasRef.current
-            const video = videoRef.current
-            const ctx = canvas.getContext('2d')
-            
-            if (ctx && video.readyState === video.HAVE_ENOUGH_DATA) {
-              canvas.width = video.videoWidth
-              canvas.height = video.videoHeight
-              ctx.drawImage(video, 0, 0)
-              
-              try {
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-                codeReader.decodeFromImageData(imageData).then(result => {
-                  if (result) {
-                    handleBarcodeResult(result.getText())
-                    // Stop scanning
-                    scanning = false
-                    stream.getTracks().forEach(track => track.stop())
-                  }
-                }).catch(() => {
-                  // Continue scanning if no barcode found
-                  if (scanning) {
-                    setTimeout(scan, 100)
-                  }
-                })
-              } catch (error) {
-                if (scanning) {
-                  setTimeout(scan, 100)
-                }
-              }
-            } else {
-              setTimeout(scan, 100)
-            }
-          }
-          
-          setTimeout(scan, 1000) // Start scanning after video loads
-          
-        } catch (error) {
-          console.error('Error accessing camera:', error)
-          toast({
-            title: "Camera Access Error",
-            description: "Please allow camera access to scan barcodes",
-            variant: "destructive"
-          })
-        }
-      }
-      
-      startScanning()
-      
-      return () => {
-        scanning = false
-      }
-    }, [showBarcodeScanner])
-    
     if (!showBarcodeScanner) return null
     
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg p-4 max-w-md w-full mx-4">
           <div className="mb-4">
-            <h3 className="text-lg font-semibold">Scan VIN Barcode</h3>
-            <p className="text-sm text-gray-600">Position the VIN barcode in the camera view</p>
+            <h3 className="text-lg font-semibold">VIN Barcode Scanner</h3>
+            <p className="text-sm text-gray-600 mb-2">Currently setting up camera...</p>
+            <p className="text-xs text-yellow-600">⚠️ This feature is in development. Please use manual VIN entry for now.</p>
           </div>
           
-          <div className="relative">
-            <video
-              ref={videoRef}
-              className="w-full h-64 bg-gray-200 rounded-lg object-cover"
-              playsInline
-              muted
-            />
-            <canvas ref={canvasRef} className="hidden" />
-            
-            {/* Scanning overlay */}
-            <div className="absolute inset-0 border-2 border-blue-500 rounded-lg">
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="w-48 h-16 border-2 border-red-500 bg-red-100 bg-opacity-30 rounded-lg"></div>
-              </div>
+          <div className="bg-gray-100 h-64 rounded-lg flex items-center justify-center">
+            <div className="text-center">
+              <QrCode className="w-16 h-16 text-gray-400 mx-auto mb-2" />
+              <p className="text-gray-500">Camera access required</p>
+              <p className="text-xs text-gray-400">Feature coming soon</p>
             </div>
           </div>
           
@@ -192,7 +106,20 @@ export default function EnhancedVehicleTradeInForm() {
               variant="outline"
               className="flex-1"
             >
-              Cancel
+              Close
+            </Button>
+            <Button
+              onClick={() => {
+                // For now, let user manually enter VIN
+                setShowBarcodeScanner(false)
+                toast({
+                  title: "Use Manual Entry",
+                  description: "Please enter VIN manually for now",
+                })
+              }}
+              className="flex-1"
+            >
+              Manual Entry
             </Button>
           </div>
         </div>
