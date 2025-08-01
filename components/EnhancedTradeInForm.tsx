@@ -535,8 +535,18 @@ export default function EnhancedVehicleTradeInForm() {
     setUploadProgress(0)
     setSubmitError("")
 
+    // Mobile-specific timeout to prevent infinite spinning
+    const timeout = setTimeout(() => {
+      if (isSubmitting) {
+        console.error("❌ Mobile submission timeout after 15 seconds")
+        setSubmitError("Submission timeout - please try again")
+        setIsSubmitting(false)
+      }
+    }, 15000) // 15 second timeout for mobile
+
     try {
       console.log("🚀 Starting submission process...")
+      console.log("📱 Mobile device detected, using optimized submission...")
       const submissionId = `submission_${Date.now()}`
       
       console.log("📤 Uploading files...")
@@ -564,6 +574,9 @@ export default function EnhancedVehicleTradeInForm() {
       await addDoc(collection(db, "appraisals"), submission)
       console.log("✅ Submission successful!")
       
+      // Clear timeout since we succeeded
+      clearTimeout(timeout)
+      
       // Clear localStorage backup after successful submission
       localStorage.removeItem('tradeInFormData')
       
@@ -571,9 +584,23 @@ export default function EnhancedVehicleTradeInForm() {
       
     } catch (error) {
       console.error("❌ Submission error:", error)
-      setSubmitError(`Submission failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      clearTimeout(timeout)
+      
+      // Mobile-friendly error messages
+      if (error instanceof Error) {
+        if (error.message.includes('network')) {
+          setSubmitError("Network error - check your connection and try again")
+        } else if (error.message.includes('permission')) {
+          setSubmitError("Permission error - please refresh and try again")
+        } else {
+          setSubmitError(`Mobile submission failed: ${error.message}`)
+        }
+      } else {
+        setSubmitError("Mobile submission failed - please try again")
+      }
     } finally {
       setIsSubmitting(false)
+      clearTimeout(timeout)
     }
   }
 
