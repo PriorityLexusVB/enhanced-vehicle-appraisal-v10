@@ -264,8 +264,15 @@ export default function EnhancedVehicleTradeInForm() {
   }
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+    console.log(`✏️ Input changed: ${field} = ${value}`)
+    setFormData((prev) => {
+      const newData = { ...prev, [field]: value }
+      // Backup to localStorage to prevent data loss
+      localStorage.setItem('tradeInFormData', JSON.stringify(newData))
+      return newData
+    })
     if (field === "vin" && value.length === 17) {
+      console.log("🔍 Triggering VIN decode for:", value)
       decodeVIN(value)
     }
   }
