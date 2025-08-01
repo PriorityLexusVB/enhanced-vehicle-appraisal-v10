@@ -794,18 +794,30 @@ export default function EnhancedVehicleTradeInForm() {
             )}
             
             {currentStep < 3 ? (
-              <Button
-                type="button"
-                onClick={() => setCurrentStep(currentStep + 1)}
-                disabled={!canProceedToNextStep()}
-                className="flex-1 disabled:opacity-50"
-              >
-                {!canProceedToNextStep() ? (
-                  currentStep === 0 ? "Scan VIN First" :
-                  currentStep === 1 ? "Complete Vehicle Info" :
-                  "Take At Least 2 Photos"
-                ) : "Next →"}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  onClick={() => setCurrentStep(currentStep + 1)}
+                  disabled={!canProceedToNextStep()}
+                  className="flex-1 disabled:opacity-50"
+                >
+                  {!canProceedToNextStep() ? (
+                    currentStep === 0 ? "Scan VIN First" :
+                    currentStep === 1 ? "Complete Vehicle Info" :
+                    "Take At Least 2 Photos"
+                  ) : "Next →"}
+                </Button>
+                {currentStep === 2 && (
+                  <Button
+                    type="button"
+                    onClick={() => setCurrentStep(3)}
+                    variant="outline"
+                    className="px-4"
+                  >
+                    Skip Photos
+                  </Button>
+                )}
+              </div>
             ) : (
               <Button
                 type="submit"
