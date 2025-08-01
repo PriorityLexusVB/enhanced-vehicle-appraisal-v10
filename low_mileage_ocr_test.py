@@ -8,7 +8,7 @@ import io
 from PIL import Image, ImageDraw, ImageFont
 
 class LowMileageOCRTester:
-    def __init__(self, base_url="https://app-p4xu7qp6d-robs-projects-98a6166f.vercel.app"):
+    def __init__(self, base_url="https://app-3b12vq076-robs-projects-98a6166f.vercel.app"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
