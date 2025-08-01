@@ -51,7 +51,7 @@ export default function EnhancedVehicleTradeInForm() {
   const [vehicleInfo, setVehicleInfo] = useState<any>(null)
   const [vinDecoding, setVinDecoding] = useState(false)
   const [currentPhotoType, setCurrentPhotoType] = useState<string>('')
-  const [showGuidance, setShowGuidance] = useState(false)
+  const [showBarcodeScanner, setShowBarcodeScanner] = useState(false)
 
   // Professional photo requirements mapping - REMOVED LICENSE PLATE
   const photoTypeMapping = {
