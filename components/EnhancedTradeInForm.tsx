@@ -481,7 +481,7 @@ export default function EnhancedVehicleTradeInForm() {
       
       console.log("💾 Saving to database...")
       const submission = {
-        submittedBy: user?.email || userEmail || 'anonymous@trade-in.com',
+        submittedBy: user?.email || userEmail || 'mobile-user@priority-appraisal.com',
         vin: formData.vin,
         year: formData.year,
         make: formData.make,
