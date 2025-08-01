@@ -357,13 +357,18 @@ export default function EnhancedVehicleTradeInForm() {
     e.preventDefault()
     setIsSubmitting(true)
     setUploadProgress(0)
+    setSubmitError("")
 
     try {
+      console.log("🚀 Starting submission process...")
       const submissionId = `submission_${Date.now()}`
+      
+      console.log("📤 Uploading files...")
       const photoUrls = await uploadFiles(submissionId)
-
+      
+      console.log("💾 Saving to database...")
       const submission = {
-        submittedBy: user?.email || 'anonymous@trade-in.com',
+        submittedBy: user?.email || userEmail || 'anonymous@trade-in.com',
         vin: formData.vin,
         year: formData.year,
         make: formData.make,
@@ -381,11 +386,12 @@ export default function EnhancedVehicleTradeInForm() {
       }
 
       await addDoc(collection(db, "appraisals"), submission)
+      console.log("✅ Submission successful!")
       setSubmitSuccess(true)
       
     } catch (error) {
-      console.error("Submission error:", error)
-      setSubmitError("Submission failed")
+      console.error("❌ Submission error:", error)
+      setSubmitError(`Submission failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
     } finally {
       setIsSubmitting(false)
     }
