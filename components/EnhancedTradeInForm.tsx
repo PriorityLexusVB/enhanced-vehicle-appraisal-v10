@@ -381,12 +381,23 @@ export default function EnhancedVehicleTradeInForm() {
   }
 
   const handleFileChange = async (field: string, file: File | null) => {
-    setFormData(prev => ({ ...prev, [field]: file }))
+    console.log(`📸 Photo captured for ${field}:`, file ? file.name : 'no file')
     
-    if (field === "odometer" && file) {
-      await processOdometorOCR(file)
-    } else if (field === "vinPhoto" && file) {
-      await processVinOCR(file)
+    // Prevent any form reset during photo processing
+    if (file) {
+      console.log(`💾 Saving ${field} to form data...`)
+      setFormData(prev => ({ ...prev, [field]: file }))
+      
+      // Process OCR if applicable
+      if (field === "odometer" && file) {
+        console.log("🔍 Starting odometer OCR...")
+        await processOdometorOCR(file)
+      } else if (field === "vinPhoto" && file) {
+        console.log("🔍 Starting VIN OCR...")
+        await processVinOCR(file)
+      }
+      
+      console.log(`✅ ${field} processing complete`)
     }
   }
 
