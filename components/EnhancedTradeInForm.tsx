@@ -706,7 +706,9 @@ export default function EnhancedVehicleTradeInForm() {
                           type="button"
                           onClick={() => {
                             console.log("🔘 Barcode scanner button clicked!")
+                            console.log("🔍 Current showBarcodeScanner state:", showBarcodeScanner)
                             setShowBarcodeScanner(true)
+                            console.log("🔄 Set showBarcodeScanner to true")
                           }}
                           variant="outline"
                           className="flex-1 flex items-center justify-center gap-2"
@@ -714,6 +716,11 @@ export default function EnhancedVehicleTradeInForm() {
                           <QrCode className="w-4 h-4" />
                           Scan VIN Barcode
                         </Button>
+                      </div>
+                      
+                      {/* Debug info */}
+                      <div className="text-xs text-gray-400 text-center mt-2">
+                        Debug: Barcode Scanner State = {showBarcodeScanner ? 'OPEN' : 'CLOSED'}
                       </div>
                     </div>
                   </div>
