@@ -427,32 +427,38 @@ export default function EnhancedVehicleTradeInForm() {
     const files = Object.values(formData).filter(f => f instanceof File) as File[]
     const totalFiles = files.length
     
+    console.log(`📤 Upload check: Found ${totalFiles} files to upload`)
+    
     // If no files to upload, return empty array immediately
     if (totalFiles === 0) {
-      console.log("No photos to upload, proceeding with submission")
+      console.log("⚡ No photos to upload, skipping Firebase Storage entirely")
       setUploadProgress(100)
-      return photoUrls
+      return photoUrls // Return empty array immediately
     }
     
-    console.log(`Uploading ${totalFiles} files...`)
+    console.log(`📤 Starting Firebase Storage upload for ${totalFiles} files...`)
     
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i]
-      const fieldName = Object.keys(formData)[Object.values(formData).indexOf(file)]
-      try {
+    // Only try Firebase Storage if we actually have files
+    try {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        const fieldName = Object.keys(formData)[Object.values(formData).indexOf(file)]
+        console.log(`⬆️ Uploading ${fieldName} (${i + 1}/${totalFiles})...`)
+        
         const storageRef = ref(storage, `tradeins/${submissionId}/${fieldName}.jpg`)
-        console.log(`Uploading ${fieldName}...`)
         await uploadBytes(storageRef, file)
         const url = await getDownloadURL(storageRef)
         photoUrls.push(url)
         setUploadProgress(((i + 1) / totalFiles) * 100)
         console.log(`✅ ${fieldName} uploaded successfully`)
-      } catch (error) {
-        console.error(`❌ Upload error for ${fieldName}:`, error)
-        // Continue with other uploads even if one fails
       }
+      console.log(`🎉 All uploads complete: ${photoUrls.length}/${totalFiles} files uploaded`)
+    } catch (error) {
+      console.error(`💥 Firebase Storage error:`, error)
+      // Continue anyway - don't let photo upload failure block submission
+      setUploadProgress(100)
     }
-    console.log(`Upload complete: ${photoUrls.length}/${totalFiles} files uploaded`)
+    
     return photoUrls
   }
 
