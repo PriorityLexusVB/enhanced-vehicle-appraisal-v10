@@ -81,56 +81,47 @@ export default function EnhancedVehicleTradeInForm() {
 
   // Simple Barcode Scanner Component - Mobile Optimized
   const BarcodeScanner = () => {
-    console.log("🔍 BarcodeScanner render check - showBarcodeScanner:", showBarcodeScanner)
-    
     if (!showBarcodeScanner) {
-      console.log("❌ Modal not showing because showBarcodeScanner is false")
       return null
     }
     
-    console.log("✅ Rendering barcode scanner modal")
-    
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg p-4 max-w-md w-full mx-4">
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold">VIN Barcode Scanner</h3>
-            <p className="text-sm text-gray-600 mb-2">Currently setting up camera...</p>
-            <p className="text-xs text-yellow-600">⚠️ This feature is in development. Please use manual VIN entry for now.</p>
+      <div className="fixed inset-0 bg-red-500 bg-opacity-80 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 border-4 border-red-500">
+          <div className="mb-4 text-center">
+            <div className="text-2xl mb-2">🎉 SUCCESS!</div>
+            <h3 className="text-lg font-semibold text-green-600">Barcode Scanner Modal IS WORKING!</h3>
+            <p className="text-sm text-gray-600 mb-2">You can see this modal, which means the button click worked!</p>
+            <p className="text-xs text-yellow-600">⚠️ Actual barcode scanning is in development. Please use manual VIN entry for now.</p>
           </div>
           
-          <div className="bg-gray-100 h-64 rounded-lg flex items-center justify-center">
+          <div className="bg-green-100 h-32 rounded-lg flex items-center justify-center border-2 border-green-300">
             <div className="text-center">
-              <QrCode className="w-16 h-16 text-gray-400 mx-auto mb-2" />
-              <p className="text-gray-500">Camera access required</p>
-              <p className="text-xs text-gray-400">Feature coming soon</p>
+              <QrCode className="w-12 h-12 text-green-600 mx-auto mb-2" />
+              <p className="text-green-700 font-semibold">MODAL IS VISIBLE!</p>
+              <p className="text-xs text-green-600">Button click was successful</p>
             </div>
           </div>
           
           <div className="mt-4 flex gap-2">
             <Button
               onClick={() => {
-                console.log("🔘 Close button clicked")
                 setShowBarcodeScanner(false)
               }}
               variant="outline"
               className="flex-1"
             >
-              Close
+              ✅ Close (It Works!)
             </Button>
             <Button
               onClick={() => {
-                console.log("🔘 Manual Entry button clicked")
-                // For now, let user manually enter VIN
                 setShowBarcodeScanner(false)
-                toast({
-                  title: "Use Manual Entry",
-                  description: "Please enter VIN manually for now",
-                })
+                setSubmitError("Modal closed successfully! Use manual VIN entry above.")
+                setTimeout(() => setSubmitError(""), 5000)
               }}
               className="flex-1"
             >
-              Manual Entry
+              📝 Manual Entry
             </Button>
           </div>
         </div>
