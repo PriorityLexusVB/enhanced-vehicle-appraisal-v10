@@ -760,42 +760,34 @@ export default function EnhancedVehicleTradeInForm() {
                         className="text-center font-mono"
                       />
                       <div className="flex gap-2">
-                        <Button
+                        <button
                           type="button"
                           onClick={() => {
-                            setShowBarcodeScanner(true)
-                            // Add visual feedback
-                            setSubmitError("Barcode scanner button was clicked! State set to OPEN")
-                            setTimeout(() => setSubmitError(""), 3000)
+                            try {
+                              setShowBarcodeScanner(true)
+                            } catch (error) {
+                              alert("Error in main button: " + error)
+                            }
                           }}
-                          variant="outline"
-                          className="flex-1 flex items-center justify-center gap-2"
+                          className="flex-1 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                         >
-                          <QrCode className="w-4 h-4" />
-                          Scan VIN Barcode
-                        </Button>
-                      </div>
-                      
-                      {/* Visual Debug Info - No console needed */}
-                      <div className="mt-2 p-2 bg-gray-100 rounded text-xs text-center">
-                        <div>🔍 Debug Status: Barcode Scanner = {showBarcodeScanner ? '✅ OPEN' : '❌ CLOSED'}</div>
-                        <div className="mt-1">Click count test: <span id="clickCounter">0</span></div>
-                      </div>
-                      
-                      {/* Test button to verify modal system works */}
-                      <div className="mt-2">
-                        <Button
+                          🔘 Scan VIN Barcode (Main Button)
+                        </button>
+                        
+                        <button
                           type="button"
                           onClick={() => {
-                            setShowBarcodeScanner(true)
-                            alert("Test button clicked! Modal should appear now.")
+                            try {
+                              alert("Test button clicked!")
+                              setShowBarcodeScanner(true)
+                            } catch (error) {
+                              alert("Error in test button: " + error)
+                            }
                           }}
-                          variant="secondary"
-                          size="sm"
-                          className="w-full"
+                          className="flex-1 bg-green-500 text-white p-2 rounded hover:bg-green-600"
                         >
-                          🧪 TEST: Force Open Barcode Scanner
-                        </Button>
+                          🧪 TEST: Force Open Modal
+                        </button>
                       </div>
                     </div>
                   </div>
