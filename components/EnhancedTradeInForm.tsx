@@ -482,8 +482,17 @@ export default function EnhancedVehicleTradeInForm() {
       console.log("📱 Mobile device detected, using optimized submission...")
       const submissionId = `submission_${Date.now()}`
       
-      console.log("📤 Uploading files...")
-      const photoUrls = await uploadFiles(submissionId)
+      console.log("📤 Checking for photo uploads...")
+      let photoUrls: string[] = []
+      
+      try {
+        photoUrls = await uploadFiles(submissionId)
+        console.log(`📸 Photo upload result: ${photoUrls.length} photos uploaded`)
+      } catch (uploadError) {
+        console.error("⚠️ Photo upload failed, continuing without photos:", uploadError)
+        photoUrls = [] // Continue with empty photo array
+        setUploadProgress(100) // Mark upload as complete
+      }
       
       console.log("💾 Saving to database...")
       const submission = {
