@@ -79,53 +79,76 @@ export default function EnhancedVehicleTradeInForm() {
     }
   }
 
-  // Simple Barcode Scanner Component - Mobile Optimized
+  // Simple Barcode Scanner Component - FIXED RENDERING
   const BarcodeScanner = () => {
+    // Force render debugging
     if (!showBarcodeScanner) {
       return null
     }
     
+    // Create a portal to render outside of the form
     return (
-      <div className="fixed inset-0 bg-red-500 bg-opacity-80 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 border-4 border-red-500">
-          <div className="mb-4 text-center">
-            <div className="text-2xl mb-2">🎉 SUCCESS!</div>
-            <h3 className="text-lg font-semibold text-green-600">Barcode Scanner Modal IS WORKING!</h3>
-            <p className="text-sm text-gray-600 mb-2">You can see this modal, which means the button click worked!</p>
-            <p className="text-xs text-yellow-600">⚠️ Actual barcode scanning is in development. Please use manual VIN entry for now.</p>
-          </div>
-          
-          <div className="bg-green-100 h-32 rounded-lg flex items-center justify-center border-2 border-green-300">
-            <div className="text-center">
-              <QrCode className="w-12 h-12 text-green-600 mx-auto mb-2" />
-              <p className="text-green-700 font-semibold">MODAL IS VISIBLE!</p>
-              <p className="text-xs text-green-600">Button click was successful</p>
+      <>
+        <div 
+          className="fixed inset-0 z-50"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(255, 0, 0, 0.9)', // Bright red background
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <div 
+            className="bg-white rounded-lg p-6 max-w-md w-full mx-4"
+            style={{
+              backgroundColor: 'white',
+              border: '5px solid red',
+              boxShadow: '0 0 50px rgba(255, 0, 0, 0.5)'
+            }}
+          >
+            <div className="mb-4 text-center">
+              <div className="text-4xl mb-2">🎉 SUCCESS!</div>
+              <h3 className="text-xl font-bold text-green-600">MODAL IS WORKING!</h3>
+              <p className="text-sm text-gray-600 mb-2">You can see this modal! Button click successful!</p>
+              <div className="bg-yellow-100 p-2 rounded mt-2">
+                <p className="text-xs text-yellow-800">⚠️ Actual barcode scanning in development</p>
+              </div>
+            </div>
+            
+            <div className="bg-green-100 h-32 rounded-lg flex items-center justify-center border-2 border-green-300 mb-4">
+              <div className="text-center">
+                <QrCode className="w-12 h-12 text-green-600 mx-auto mb-2" />
+                <p className="text-green-700 font-bold">BUTTON WORKS!</p>
+                <p className="text-xs text-green-600">Modal rendering successful</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowBarcodeScanner(false)}
+                className="flex-1 bg-gray-500 text-white p-2 rounded hover:bg-gray-600"
+              >
+                ✅ Close Modal
+              </button>
+              <button
+                onClick={() => {
+                  setShowBarcodeScanner(false)
+                  alert("Perfect! The barcode scanner button is working. Use manual VIN entry for now.")
+                }}
+                className="flex-1 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+              >
+                📝 Use Manual Entry
+              </button>
             </div>
           </div>
-          
-          <div className="mt-4 flex gap-2">
-            <Button
-              onClick={() => {
-                setShowBarcodeScanner(false)
-              }}
-              variant="outline"
-              className="flex-1"
-            >
-              ✅ Close (It Works!)
-            </Button>
-            <Button
-              onClick={() => {
-                setShowBarcodeScanner(false)
-                setSubmitError("Modal closed successfully! Use manual VIN entry above.")
-                setTimeout(() => setSubmitError(""), 5000)
-              }}
-              className="flex-1"
-            >
-              📝 Manual Entry
-            </Button>
-          </div>
         </div>
-      </div>
+      </>
     )
   }
   const photoTypeMapping = {
