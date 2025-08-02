@@ -705,10 +705,10 @@ export default function EnhancedVehicleTradeInForm() {
                         <Button
                           type="button"
                           onClick={() => {
-                            console.log("🔘 Barcode scanner button clicked!")
-                            console.log("🔍 Current showBarcodeScanner state:", showBarcodeScanner)
                             setShowBarcodeScanner(true)
-                            console.log("🔄 Set showBarcodeScanner to true")
+                            // Add visual feedback
+                            setSubmitError("Barcode scanner button was clicked! State set to OPEN")
+                            setTimeout(() => setSubmitError(""), 3000)
                           }}
                           variant="outline"
                           className="flex-1 flex items-center justify-center gap-2"
@@ -718,9 +718,26 @@ export default function EnhancedVehicleTradeInForm() {
                         </Button>
                       </div>
                       
-                      {/* Debug info */}
-                      <div className="text-xs text-gray-400 text-center mt-2">
-                        Debug: Barcode Scanner State = {showBarcodeScanner ? 'OPEN' : 'CLOSED'}
+                      {/* Visual Debug Info - No console needed */}
+                      <div className="mt-2 p-2 bg-gray-100 rounded text-xs text-center">
+                        <div>🔍 Debug Status: Barcode Scanner = {showBarcodeScanner ? '✅ OPEN' : '❌ CLOSED'}</div>
+                        <div className="mt-1">Click count test: <span id="clickCounter">0</span></div>
+                      </div>
+                      
+                      {/* Test button to verify modal system works */}
+                      <div className="mt-2">
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            setShowBarcodeScanner(true)
+                            alert("Test button clicked! Modal should appear now.")
+                          }}
+                          variant="secondary"
+                          size="sm"
+                          className="w-full"
+                        >
+                          🧪 TEST: Force Open Barcode Scanner
+                        </Button>
                       </div>
                     </div>
                   </div>
