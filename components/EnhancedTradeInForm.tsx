@@ -81,7 +81,14 @@ export default function EnhancedVehicleTradeInForm() {
 
   // Simple Barcode Scanner Component - Mobile Optimized
   const BarcodeScanner = () => {
-    if (!showBarcodeScanner) return null
+    console.log("🔍 BarcodeScanner render check - showBarcodeScanner:", showBarcodeScanner)
+    
+    if (!showBarcodeScanner) {
+      console.log("❌ Modal not showing because showBarcodeScanner is false")
+      return null
+    }
+    
+    console.log("✅ Rendering barcode scanner modal")
     
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -102,7 +109,10 @@ export default function EnhancedVehicleTradeInForm() {
           
           <div className="mt-4 flex gap-2">
             <Button
-              onClick={() => setShowBarcodeScanner(false)}
+              onClick={() => {
+                console.log("🔘 Close button clicked")
+                setShowBarcodeScanner(false)
+              }}
               variant="outline"
               className="flex-1"
             >
@@ -110,6 +120,7 @@ export default function EnhancedVehicleTradeInForm() {
             </Button>
             <Button
               onClick={() => {
+                console.log("🔘 Manual Entry button clicked")
                 // For now, let user manually enter VIN
                 setShowBarcodeScanner(false)
                 toast({
