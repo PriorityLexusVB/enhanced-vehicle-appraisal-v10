@@ -54,7 +54,7 @@ export default function EnhancedVehicleTradeInForm() {
   const [showGuidance, setShowGuidance] = useState(false)
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false)
 
-  // SIMPLE MODAL TEST - Added at the top
+  // SIMPLE MODAL TEST - Added at the top with error handling
   if (showBarcodeScanner) {
     return (
       <div style={{
@@ -80,7 +80,13 @@ export default function EnhancedVehicleTradeInForm() {
           <p>The barcode scanner button works!</p>
           <p>State change successful!</p>
           <button 
-            onClick={() => setShowBarcodeScanner(false)}
+            onClick={() => {
+              try {
+                setShowBarcodeScanner(false)
+              } catch (error) {
+                alert("Error closing modal: " + error)
+              }
+            }}
             style={{
               backgroundColor: 'blue',
               color: 'white',
