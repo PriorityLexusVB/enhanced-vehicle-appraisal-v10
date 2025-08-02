@@ -85,7 +85,7 @@ function SubmitPageContent() {
 
   return (
     <div className="min-h-screen bg-background">
-      <MinimalTradeInForm />
+      <FixedTradeInForm />
     </div>
   )
 }
