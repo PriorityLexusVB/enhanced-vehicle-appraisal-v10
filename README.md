@@ -2,6 +2,40 @@
 
 A comprehensive Next.js application for vehicle trade-in appraisals with advanced OCR, AI photo analysis, and role-based management.
 
+---
+
+## 🎯 Quick Navigation
+
+**Getting Started:**
+- 🚀 **[GETTING_STARTED.md](GETTING_STARTED.md)** ← Start here to run the app NOW
+- 📋 **[TODO_TASK_LIST.md](TODO_TASK_LIST.md)** ← Complete production roadmap (2-3 weeks)
+- ⚡ **[Quick Start Script](#quick-start)** ← Automated setup
+
+**Analysis & Planning:**
+- 📊 **[FINAL_REPORT.md](FINAL_REPORT.md)** ← Executive summary of analysis
+- 📖 **[COMPREHENSIVE_DIAGNOSIS.md](COMPREHENSIVE_DIAGNOSIS.md)** ← Full technical analysis (805 lines)
+- 🔒 **[SECURITY_AUDIT.md](SECURITY_AUDIT.md)** ← Security vulnerabilities & fixes
+- 📋 **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** ← At-a-glance summary
+
+---
+
+## ⚡ Quick Start
+
+```bash
+# Automated setup (recommended)
+./quick-start.sh
+
+# Or manual setup
+npm install
+cp .env.example .env.local
+# Edit .env.local with your Firebase credentials
+npm run dev
+```
+
+**→ See [GETTING_STARTED.md](GETTING_STARTED.md) for detailed instructions**
+
+---
+
 ## 📋 Overview
 
 This system streamlines the vehicle appraisal process with:
