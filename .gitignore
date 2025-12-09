@@ -37,6 +37,24 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Backup and temporary files
+*.backup
+*.old
+*.tmp
+dev.log
+*.log
+
+# Archive directory
+archive/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Test files in root (should be in tests/)
+*_test.py
+
 # Google Cloud Service Account (NEVER COMMIT)
 trade-in-vision-api-646f33683094.json
 *.json

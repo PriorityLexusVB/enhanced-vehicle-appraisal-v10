@@ -54,50 +54,8 @@ export default function EnhancedVehicleTradeInForm() {
   const [showGuidance, setShowGuidance] = useState(false)
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false)
 
-  // SIMPLE MODAL TEST - Added at the top with error handling
-  if (showBarcodeScanner) {
-    return (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'red',
-        zIndex: 99999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{
-          backgroundColor: 'white',
-          padding: '20px',
-          borderRadius: '10px',
-          textAlign: 'center',
-          maxWidth: '400px'
-        }}>
-          <h1>🎉 MODAL TEST SUCCESS!</h1>
-          <p>The barcode scanner button works!</p>
-          <p>State change successful!</p>
-          <button 
-            onClick={() => {
-              try {
-                setShowBarcodeScanner(false)
-              } catch (error) {
-                alert("Error closing modal: " + error)
-              }
-            }}
-            style={{
-              backgroundColor: 'blue',
-              color: 'white',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              marginTop: '10px'
-            }}
-          >
-            Close Modal
+  // Photo capture refs
+  const fileInputRefs = {
           </button>
         </div>
       </div>
